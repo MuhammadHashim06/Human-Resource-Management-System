@@ -1,0 +1,103 @@
+/* Common styles for all devices */
+.login {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+  }
+  
+  .login .box1 {
+    background-color: white;
+    margin: 10%;
+    padding: 5%; 
+  }
+  
+  .login .box1 h1 {
+    font-size: 2em;
+    text-align: center;
+  }
+  
+  .login form a {
+    color: #5f8671;
+  }
+  
+  .login form {
+    display: flex;
+    flex-direction: column;
+    padding: 10%;
+  }
+  
+  .login .box2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(158, 200, 185);
+  }
+  
+  .login input[type="email"],
+  .login input[type="password"],
+  .login input[type="submit"] {
+    padding: 2%;
+    font-size: 1em;
+    margin-bottom: 3%;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .login input[type="email"],
+  .login input[type="password"],
+  .login input[type="submit"] {
+    transition: all ease 0.5s;
+    outline: none;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+  }
+  
+  .login input[type="email"]:focus,
+  .login input[type="password"]:focus {
+    border: 1px solid black;
+  }
+  
+  .login input[type="email"]:invalid,
+  .login input[type="password"]:invalid {
+    border: 1px solid red;
+  }
+  
+  .login input[type="submit"] {
+    background-color: #1B4242;
+    color: white;
+  }
+  
+  .login input[type="submit"]:hover {
+    background-color: #9EC8B9;
+    cursor: pointer;
+  }
+  
+  /* Media Query for smaller screens */
+  @media (max-width: 768px) {
+    .login {
+      grid-template-columns: 1fr;
+      background-color: rgb(158, 200, 185);
+    }
+    
+    .login .box2 {
+      display: none;
+    }
+    
+    .login .box1 {
+      background-color: rgb(158, 200, 185);
+      padding: 5%;
+    }
+    
+    .login .box1,
+    .login form {
+      background-color: white;
+      padding: 5%;
+    }
+    
+    .login input[type="email"],
+    .login input[type="password"],
+    .login input[type="submit"],
+    .login label {
+      font-size: 0.8em; 
+    }
+  }
+  
