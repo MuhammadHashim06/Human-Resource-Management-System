@@ -74,7 +74,6 @@
     .login {
       grid-template-columns: 1fr;
       height: 100%;
-      /* background-color: rgb(158, 200, 185); */
     }
     .login .box1 {
       margin: 3%;

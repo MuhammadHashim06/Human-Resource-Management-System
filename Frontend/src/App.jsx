@@ -1,11 +1,14 @@
-import Login from "./Components/Login"
+import Home from "./Components/Home"
+import Sidebar from "./Components/Sidebar"
+import './App.css'
 
-// import './App.css'
 function App() {
   return (
-    <>
-    <Login/>
-    </>
+    <div className="Dasboard">
+    {/* <Login/> */}
+    <Sidebar/>
+    <Home/>
+    </div>
   )
 }
 

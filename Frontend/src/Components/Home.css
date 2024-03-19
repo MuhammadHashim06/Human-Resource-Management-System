@@ -1,0 +1,24 @@
+.menu {
+    padding: 3%;
+    margin-left: 250px;
+    width: 100%;
+  }
+  
+  .menu h1 {
+    margin-bottom: 20px;
+  }
+  
+  .menu .content {
+    padding: 20px;
+  }
+  
+  .menu .announcement {
+    margin-bottom: 20px;
+  }
+  
+  .menu .chart-container {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+    
+  
