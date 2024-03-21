@@ -1,0 +1,22 @@
+.Attendance{
+    padding: 3%;
+    margin-left: 250px;
+    text-align: center;
+}
+.Attendance #attendanceForm .button{
+    display: flex;
+    justify-content: center;
+    gap:  10px;
+}
+.Attendance #attendanceForm button{
+    background-color: rgb(158, 200, 185);
+    border: none;
+    border-radius: 3px;
+    padding: 7.5px;
+    transition: all ease 0.25s;
+}
+.Attendance #attendanceForm button:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

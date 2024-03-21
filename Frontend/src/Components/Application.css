@@ -1,0 +1,97 @@
+.menunavigation {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.menunavigation span {
+  background-color: rgb(158, 200, 185);
+  border: none;
+  border-radius: 3px;
+  padding: 7.5px;
+  transition: all ease 0.25s;
+}
+.menunavigation span:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.menunavigation button {
+  border: none;
+  border-radius: 3px;
+  transition: all ease 0.25s;
+}
+
+.menunavigation button:hover {
+  cursor: pointer;
+  background-color: rgba(158, 200, 185, 0.788);
+  transform: scale(1.1);
+}
+
+.applicationform form {
+  background-color: rgb(255, 255, 255);
+  padding: 5%;
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 15px;
+}
+
+.applicationform {
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  display: none;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  /* padding: 20%; */
+}
+.applicationform .button {
+  display: flex;
+  justify-content:center;
+  gap: 7%;
+}
+.applicationform .button input[type="submit"],
+.applicationform .button input[type="button"] {
+  background-color: rgb(158, 200, 185);
+  border: none;
+  border-radius: 3px;
+  padding: 7.5px;
+  transition: all ease 0.25s;
+}
+.applicationform .button input[type="submit"]:hover,
+.applicationform .button input[type="button"]:hover
+{
+    cursor: pointer;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+table {
+  text-align: center;
+  border-spacing: none;
+  width: 100% !important;
+  margin-top: 2%;
+  box-shadow: 0px 0px 5px grey;
+}
+th,
+td {
+  border-bottom: 1px solid #ddd;
+}
+tr {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+table thead {
+  padding: 5px;
+}
+@media screen and (max-width: 768px) {
+  .applicationform {
+    padding: 10% 5%;
+  }
+}
+@media screen and (max-width: 480px) {
+  .applicationform {
+    padding: 5% 2%;
+  }
+}

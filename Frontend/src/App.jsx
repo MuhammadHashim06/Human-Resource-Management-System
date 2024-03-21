@@ -1,22 +1,28 @@
-import Home from "./Components/Home"
-import Sidebar from "./Components/Sidebar"
-// import './App.css'
-import { useState } from "react"
+import { useState } from "react";
+import Home from "./Components/Home";
+import Sidebar from "./Components/Sidebar";
+import Applications from "./Components/Applications";
+import Assignments from "./Components/Assignments";
+import Attendance from "./Components/Attendance";
+import './App.css';
 
 function App() {
-  const [Component, setComponent] = useState(Home);
+  const [component, setComponent] = useState('Home');
 
-  function  onClick(name) {
-    console.log("Button clicked: ",name);
+  function onClick(name) {
+    console.log("Button clicked: ", name);
     setComponent(name);
-   }
+  }
+
   return (
-    <div className="Dasboard">
-    {/* <Login/> */}
-    <Sidebar prop= {onClick} />
-    <Component/>
+    <div className="Dashboard">
+      <Sidebar prop={onClick} />
+      {component === 'Home' && <Home />}
+      {component === 'Applications' && <Applications />}
+      {component === 'Assignments' && <Assignments />}
+      {component === 'Attendance' && <Attendance />}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
