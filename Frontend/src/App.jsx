@@ -1,27 +1,26 @@
+import Login from "./Components/Login";
+import "./App.css";
+import Dasboard from './Components/Dasboard'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import Home from "./Components/Home";
-import Sidebar from "./Components/Sidebar";
-import Applications from "./Components/Applications";
-import Assignments from "./Components/Assignments";
-import Attendance from "./Components/Attendance";
-import './App.css';
 
 function App() {
-  const [component, setComponent] = useState('Home');
+  const [user, setUser] = useState(null);
 
-  function onClick(name) {
-    console.log("Button clicked: ", name);
-    setComponent(name);
+  function handleUser(data) {
+    console.log("handle user", data);
+    setUser(data);
   }
 
   return (
-    <div className="Dashboard">
-      <Sidebar prop={onClick} />
-      {component === 'Home' && <Home />}
-      {component === 'Applications' && <Applications />}
-      {component === 'Assignments' && <Assignments />}
-      {component === 'Attendance' && <Attendance />}
-    </div>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login handleUser={handleUser} />} />
+          <Route path="/Dashboard" element={<Dasboard user={user} />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 

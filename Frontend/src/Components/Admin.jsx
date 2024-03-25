@@ -7,7 +7,7 @@ function Sidebar(props) {
 
   const handleClick = (e) => {
     const componentName = e.target.id;
-    props.prop(componentName); // Change props.onClick to props.prop
+    props.prop(componentName);
     setActiveItem(componentName);
   };
 
@@ -23,10 +23,11 @@ function Sidebar(props) {
       <div className="menubar">
         <ul>
           <li id="Home" className={`menu-link ${activeItem === 'Home' ? 'active' : ''}`} onClick={handleClick}>Home</li>
+          <li id="Employee" className={`menu-link ${activeItem === 'Employee' ? 'active' : ''}`} onClick={handleClick}>Employee</li>
           <li id="Attendance" className={`menu-link ${activeItem === 'Attendance' ? 'active' : ''}`} onClick={handleClick}>Attendance</li>
-          <li id="Assignments" className={`menu-link ${activeItem === 'Assignments' ? 'active' : ''}`} onClick={handleClick}>Assignments</li>
-          <li id="Applications" className={`menu-link ${activeItem === 'Applications' ? 'active' : ''}`} onClick={handleClick}>Applications</li>
-         <Link to={'/'}> <li id="Login" className={`menu-link ${activeItem === 'Login' ? 'active' : ''}`} onClick={handleClick}>Log out</li></Link>
+          <li id="Reports" className={`menu-link ${activeItem === 'Reports' ? 'active' : ''}`} onClick={handleClick}>Reports</li>
+          <li id="Requests" className={`menu-link ${activeItem === 'Requests' ? 'active' : ''}`} onClick={handleClick}>Applications</li>
+          <Link to={'/'}> <li id="Login" className={`menu-link ${activeItem === 'Login' ? 'active' : ''}`} onClick={handleClick}>Log out</li></Link>
         </ul>
       </div>
     </div>
