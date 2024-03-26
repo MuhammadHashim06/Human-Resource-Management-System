@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Login.css";
 import { useNavigate } from 'react-router-dom';
+import image from './images/Log-in_vector.png'
 
 function Login(props) {
   const [email, setEmail] = useState("");
@@ -54,6 +55,7 @@ function Login(props) {
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
+          // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])"
             type="password"
             name="password"
             id=""
@@ -66,7 +68,7 @@ function Login(props) {
         </form>
       </div>
       <div className="box2">
-        <img src="../Images/Log-in_vector.png" alt="" />
+        <img src={image} alt="" />
       </div>
     </div>
   );

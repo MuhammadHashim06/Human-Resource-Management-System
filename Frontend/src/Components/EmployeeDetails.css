@@ -26,20 +26,24 @@
 .employee-table th {
     background-color: #f2f2f2;
 }
-
+.employee-table td:nth-child(5th){
+    display: flex;
+    gap: 10px;
+}
 .employee-table td button {
     padding: 5px 10px;
-    margin-right: 5px;
+    margin: 0 5px;
     cursor: pointer;
-    background-color: #333;
-    color: white;
+    background-color: rgb(158, 200, 185);
+    transition: ease 0.5s ;
     border: none;
-    border-radius: 3px;
-}
+} 
 
 .employee-table td button:hover {
-    background-color: #555;
-}
+    background-color: rgb(158, 200, 185);
+    cursor: pointer;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);}
 
 .employee-table .active {
     background-color: #555;

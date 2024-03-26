@@ -48,7 +48,21 @@ const EmployeeList = () => {
         closeEditModal();
     };
 
-    return (
+    return (<>{(editEmployeeId !== null || isAddingEmployee) && (
+        <div className="modal">
+            <div className="modal-content">
+                <span className="close" onClick={closeEditModal}>&times;</span>
+                <h2>{editEmployeeId !== null ? 'Edit Employee' : 'Add Employee'}</h2>
+                <label htmlFor="name">Name:</label>
+                <input type="text" id="name" value={newName} onChange={(e) => setNewName(e.target.value)} />
+                <label htmlFor="email">Email:</label>
+                <input type="email" id="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
+                <label htmlFor="department">Department:</label>
+                <input type="text" id="department" value={newDepartment} onChange={(e) => setNewDepartment(e.target.value)} />
+                <button onClick={editEmployeeId !== null ? saveChanges : saveNewEmployee}>{editEmployeeId !== null ? 'Save Changes' : 'Add Employee'}</button>
+            </div>
+        </div>
+    )}
         <div className="employee">
             <h1>Employee List</h1>
             <button onClick={addEmployee}>Add Employee</button>
@@ -77,22 +91,9 @@ const EmployeeList = () => {
                     ))}
                 </tbody>
             </table>
-            {(editEmployeeId !== null || isAddingEmployee) && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <span className="close" onClick={closeEditModal}>&times;</span>
-                        <h2>{editEmployeeId !== null ? 'Edit Employee' : 'Add Employee'}</h2>
-                        <label htmlFor="name">Name:</label>
-                        <input type="text" id="name" value={newName} onChange={(e) => setNewName(e.target.value)} />
-                        <label htmlFor="email">Email:</label>
-                        <input type="email" id="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
-                        <label htmlFor="department">Department:</label>
-                        <input type="text" id="department" value={newDepartment} onChange={(e) => setNewDepartment(e.target.value)} />
-                        <button onClick={editEmployeeId !== null ? saveChanges : saveNewEmployee}>{editEmployeeId !== null ? 'Save Changes' : 'Add Employee'}</button>
-                    </div>
-                </div>
-            )}
+            
         </div>
+        </>
     );
 };
 

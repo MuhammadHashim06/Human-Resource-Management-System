@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Requests.css"; // Import CSS file for component styling
+import "./Requests.css";
 
 const Requests = () => {
   const [applications, setApplications] = useState([

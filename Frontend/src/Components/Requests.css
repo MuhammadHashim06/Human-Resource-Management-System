@@ -25,23 +25,32 @@
   cursor: pointer;
 }
 
-.reports .actions {
+.actions {
   display: flex;
   justify-content: end;
+  gap: 10px;
   margin-top: 10px;
   transition: transform 1s ease;
 }
 
-.reports .actions button {
+button {
   padding: 5px 10px;
   margin: 0 5px;
   cursor: pointer;
+  background-color: rgb(158, 200, 185);
+  transition: ease 0.5s ;
+  border: none;
 }
-
+button:hover{
+    background-color: rgb(158, 200, 185);
+    cursor: pointer;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 .reports p {
   margin-top: 10px;
 }
-.reports .modal {
+ .modal {
   display: grid;
   place-items: center;
   position: absolute;
@@ -51,11 +60,11 @@
   /* padding: 10%; */
 }
 
-.reports .modal-content {
+.modal-content {
   padding: 5%;
   background-color: white;
 }
-.reports .close {
+.close {
   cursor: pointer;
   float: right;
 }
