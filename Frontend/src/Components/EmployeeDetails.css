@@ -48,3 +48,10 @@
 .employee-table .active {
     background-color: #555;
 }
+.modal-content{
+    display: flex;
+    flex-direction: column;
+}
+.modal-content input {
+    padding: 10px;
+}
