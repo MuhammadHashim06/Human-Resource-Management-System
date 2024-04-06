@@ -9,7 +9,6 @@ function Login(props) {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-
   const User = [
     {
       id: 1,
@@ -29,6 +28,10 @@ function Login(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!email || !password) {
+      setError("Please enter both email and password");
+      return;
+    }
     const user = User.find((u) => u.email === email && u.password === password);
     if (user) {
       console.log("User found:", user);
@@ -39,7 +42,7 @@ function Login(props) {
       setEmail("");
       setPassword("");
     }
-};
+  };
 
   return (
     <div className="login">
@@ -55,7 +58,6 @@ function Login(props) {
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-          // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])"
             type="password"
             name="password"
             id=""
