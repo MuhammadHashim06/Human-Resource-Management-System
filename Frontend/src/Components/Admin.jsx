@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Sidebar(props) {
   const [activeItem, setActiveItem] = useState(null);
-
+console.log(props);
   const handleClick = (e) => {
     const componentName = e.target.id;
     props.prop(componentName);
@@ -16,7 +16,7 @@ function Sidebar(props) {
       <div className="user">
         <img src="../Images/Log-in_vector.png" alt="" />
         <p>
-          Muhammad Hashim <br />
+          {props.Cuser.NAME} <br />
           <span>Web developer</span>
         </p>
       </div>

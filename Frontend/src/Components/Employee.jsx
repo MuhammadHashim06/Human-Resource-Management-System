@@ -1,13 +1,8 @@
-import { useState } from 'react';
+import  { useState, useEffect } from 'react';
 import './EmployeeDetails.css';
 
 const EmployeeList = () => {
-    const [employees, setEmployees] = useState([
-        { id: 1, name: 'John Doe', email: 'john.doe@example.com', department: 'IT', salary: 50000, Dateofjoining: '2022-01-01', password: 'password123', role: 'Admin' },
-        { id: 2, name: 'Jane Smith', email: 'jane.smith@example.com', department: 'HR', salary: 60000, Dateofjoining: '2022-02-15', password: 'abc123', role: 'Employee' },
-        { id: 3, name: 'Alice Johnson', email: 'alice.johnson@example.com', department: 'Finance', salary: 70000, Dateofjoining: '2022-03-10', password: 'qwerty', role: 'Employee' }
-    ]);
-
+    const [employees, setEmployees] = useState([]);
     const [editEmployeeId, setEditEmployeeId] = useState(null);
     const [newName, setNewName] = useState('');
     const [newEmail, setNewEmail] = useState('');
@@ -17,6 +12,15 @@ const EmployeeList = () => {
     const [newPassword, setNewPassword] = useState('');
     const [newRole, setNewRole] = useState('Employee'); // Default role is Employee
     const [isAddingEmployee, setIsAddingEmployee] = useState(false);
+
+    useEffect(() => {
+        fetch('http://localhost:4000/getemployee')
+            .then(response => response.json())
+            .then(data => setEmployees(data))
+            .catch(error => console.error('Error fetching data:', error));
+            console.log(employees);
+
+    }, []);
 
     const openEditModal = (id, name, email, department, salary, Dateofjoining, password, role) => {
         setEditEmployeeId(id);
@@ -38,15 +42,42 @@ const EmployeeList = () => {
         if (!validateFields()) {
             return;
         }
-        setEmployees(employees.map(employee =>
-            employee.id === editEmployeeId ? { ...employee, name: newName, email: newEmail, department: newDepartment, salary: newSalary, Dateofjoining: newDateofjoining, password: newPassword, role: newRole } : employee
-        ));
-        closeEditModal();
+        fetch(`http://localhost:4000/updateemployee/${editEmployeeId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: editEmployeeId,
+                name: newName,
+                email: newEmail,
+                department: newDepartment,
+                salary: newSalary,
+                Dateofjoining: newDateofjoining,
+                password: newPassword,
+                role: newRole,
+            }),
+        })
+            .then(response => response.json())
+            .then(() => {
+                setEmployees(employees.map(employee =>
+                    employee.id === editEmployeeId ? { ...employee, name: newName, email: newEmail, department: newDepartment, salary: newSalary, Dateofjoining: newDateofjoining, password: newPassword, role: newRole } : employee
+                ));
+                closeEditModal();
+            })
+            .catch(error => console.error('Error updating employee:', error));
     };
 
     const deleteEmployee = (id) => {
-        setEmployees(employees.filter(employee => employee.id !== id));
+        if (window.confirm("Are you sure you want to delete this employee?")) {
+            fetch(`http://localhost:4000/deleteemployee/${id}`, {
+                method: 'DELETE',
+            })
+                .then(() => setEmployees(employees.filter(employee => employee.id !== id)))
+                .catch(error => console.error('Error deleting employee:', error));
+        }
     };
+    
 
     const addEmployee = () => {
         setIsAddingEmployee(true);
@@ -56,10 +87,29 @@ const EmployeeList = () => {
         if (!validateFields()) {
             return;
         }
-        const newId = Math.max(...employees.map(employee => employee.id)) + 1;
-        const newEmployee = { id: newId, name: newName, email: newEmail, department: newDepartment, salary: newSalary, Dateofjoining: newDateofjoining, password: newPassword, role: newRole };
-        setEmployees([...employees, newEmployee]);
-        closeEditModal();
+        fetch('http://localhost:4000/insertemployee', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: newName,
+                email: newEmail,
+                department: newDepartment,
+                salary: newSalary,
+                Dateofjoining: newDateofjoining,
+                password: newPassword,
+                role: newRole,
+            }),
+        })
+            .then(response => response.json())
+            .then(() => {
+                const newId = Math.max(...employees.map(employee => employee.id)) + 1;
+                const newEmployee = { id: newId, name: newName, email: newEmail, department: newDepartment, salary: newSalary, Dateofjoining: newDateofjoining, password: newPassword, role: newRole };
+                setEmployees([...employees, newEmployee]);
+                closeEditModal();
+            })
+            .catch(error => console.error('Error adding employee:', error));
     };
 
     const validateFields = () => {
@@ -126,15 +176,15 @@ const EmployeeList = () => {
                     </thead>
                     <tbody>
                         {employees.map(employee => (
-                            <tr key={employee.id}>
-                                <td>{employee.id}</td>
-                                <td>{employee.name}</td>
-                                <td>{employee.email}</td>
-                                <td>{employee.department}</td>
-                                <td>{employee.salary}</td>
-                                <td>{employee.Dateofjoining}</td>
-                                <td>{employee.password}</td>
-                                <td>{employee.role}</td>
+                            <tr key={employee.ID}>
+                                <td>{employee.ID}</td>
+                                <td>{employee.NAME}</td>
+                                <td>{employee.EMAIL}</td>
+                                <td>{employee.DEPARTMENT}</td>
+                                <td>{employee.SALARY}</td>
+                                <td>{employee.DATEOFJOINING}</td>
+                                <td>{employee.PASSWORD}</td>
+                                <td>{employee.ROLE}</td>
                                 <td>
                                     <button onClick={() => openEditModal(employee.id, employee.name, employee.email, employee.department, employee.salary, employee.Dateofjoining, employee.password, employee.role)}>Edit</button>
                                     <button onClick={() => deleteEmployee(employee.id)}>Delete</button>

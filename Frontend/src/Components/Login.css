@@ -34,6 +34,7 @@
   
   .login input[type="email"],
   .login input[type="password"],
+  .login input[type="text"],
   .login input[type="submit"] {
     padding: 2%;
     font-size: 1em;
@@ -44,6 +45,7 @@
   
   .login input[type="email"],
   .login input[type="password"],
+  .login input[type="text"],
   .login input[type="submit"] {
     transition: all ease 0.5s;
     outline: none;

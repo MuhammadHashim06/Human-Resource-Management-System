@@ -6,17 +6,19 @@ import Reports from "./Reports";
 import EmployeeList from "./Employee";
 import AttendanceReport from "./Attendancereport";
 
-export default function Admin() {
+export default function Admin(props) {
   const [component, setComponent] = useState("Home");
 
   function onClick(name) {
     console.log("Button clicked: ", name);
     setComponent(name);
+    console.log(props.data);
   }
+
   return (
     <div>
       <div className="Dashboard">
-        <Sidebar prop={onClick} />
+        <Sidebar prop={onClick} Cuser={props.data} />
         {component === "Home" && <Home />}
         {component === "Employee" && <EmployeeList />}
         {component === "Requests" && <Requests />}

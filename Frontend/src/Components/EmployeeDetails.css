@@ -38,7 +38,11 @@
     transition: ease 0.5s ;
     border: none;
 } 
-
+.showpassword{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
 .employee-table td button:hover {
     background-color: rgb(158, 200, 185);
     cursor: pointer;
