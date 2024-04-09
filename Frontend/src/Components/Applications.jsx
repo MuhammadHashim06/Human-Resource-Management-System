@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react';
 import './Application.css';
 
-const Applications = () => {
+const Applications = (props) => {
     const [showForm, setShowForm] = useState(false);
     const [applications, setApplications] = useState([]);
-    const [employeeId, setEmployeeId] = useState('');
     const [subject, setSubject] = useState('');
     const [body, setBody] = useState('');
 
     useEffect(() => {
-        // Fetch employee ID dynamically here
-        setEmployeeId('employee_id_here');
         fetchApplications();
     }, []);
 
@@ -18,7 +15,7 @@ const Applications = () => {
         try {
             const response = await fetch('http://localhost:4000/getapplications');
             const data = await response.json();
-            setApplications(data.applications);
+            setApplications(data);
         } catch (error) {
             console.error('Error fetching applications:', error);
         }
@@ -31,13 +28,13 @@ const Applications = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch('your_api_endpoint_here', {
+            const response = await fetch('http://localhost:4000/addapplications/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    employeeId: employeeId,
+                    employee_id: props.id,
                     subject: subject,
                     description: body,
                     date: new Date().toISOString().slice(0, 10), // yyyy-mm-dd format
@@ -73,19 +70,16 @@ const Applications = () => {
                 </form>
             </div>
             <div className="Application">
-
                 <div className="menu">
                     <div className="menu-toggle-btn"><i className="fas fa-bars"></i></div>
                     <div className="menunavigation">
                         <h1>Applications Page</h1>
                         <span id="newrequest" onClick={toggleForm}>New +</span>
                     </div>
-
                     <table id="applicationTable">
                         <thead>
                             <tr>
                                 <th>Sr #</th>
-                                <th>Employee ID</th>
                                 <th>Subject</th>
                                 <th>Status</th>
                                 <th>Date</th>
@@ -93,12 +87,11 @@ const Applications = () => {
                         </thead>
                         <tbody>
                             {applications.map((application, index) => (
-                                <tr key={application.id}>
+                                <tr key={index}>
                                     <td>{index + 1}</td>
-                                    <td>{application.employeeId}</td>
-                                    <td>{application.subject}</td>
-                                    <td>{application.status}</td>
-                                    <td>{application.date}</td>
+                                    <td>{application.SUBJECT}</td>
+                                    <td>{application.STATUS}</td>
+                                    <td>{application.DATE}</td>
                                 </tr>
                             ))}
                         </tbody>

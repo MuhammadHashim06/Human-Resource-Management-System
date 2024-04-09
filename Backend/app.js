@@ -12,6 +12,7 @@ var updateemployee = require('./routes/Updateemployee')
 var deleteemployee = require('./routes/Deleteemployee')
 var getapplications=require('./routes/getapplications');
 var updatestatus=require('./routes/updatestatus');
+var addapplications=require('./routes/addapplications');
 var app = express();
 const cors = require('cors');
 
@@ -34,6 +35,7 @@ app.use('/updateemployee',updateemployee);
 app.use('/insertemployee',insertemployee);
 app.use('/getapplications',getapplications);
 app.use('/updatestatus',updatestatus);
+app.use('/addapplications',addapplications);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

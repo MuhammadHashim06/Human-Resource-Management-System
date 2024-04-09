@@ -5,7 +5,7 @@ import Applications from './Applications';
 import Assignments from './Assignments';
 import Attendance from './Attendance';
 
-export default function User() {
+export default function User(props) {
     const [component, setComponent] = useState('Home');
 
   function onClick(name) {
@@ -16,7 +16,7 @@ export default function User() {
     <div><div className="Dashboard">
     <Sidebar prop={onClick} />
     {component === 'Home' && <Home />}
-    {component === 'Applications' && <Applications />}
+    {component === 'Applications' && <Applications name={props.data.NAME} id= {props.data.ID} />}
     {component === 'Assignments' && <Assignments />}
     {component === 'Attendance' && <Attendance />}
   </div></div>
