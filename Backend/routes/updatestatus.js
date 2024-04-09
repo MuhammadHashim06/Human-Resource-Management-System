@@ -6,7 +6,7 @@ var database = require('../Database/mysql');
 router.put('/:id', function(req, res, next) {
     var { status } = req.body;
     var appId = req.params.id;
-    var sql = 'UPDATE applications SET STATUS = ? WHERE id = ?';
+    var sql = 'UPDATE applications SET STATUS = ? WHERE ID = ?';
     database.query(sql, [status, appId], (err, result) => {
         if (err) {
             console.error('Error executing query:', err);

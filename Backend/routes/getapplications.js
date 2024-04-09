@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 var database = require('../Database/mysql');
 
-/* GET employee listing. */
+/* GET applications with employee names. */
 router.get('/', function(req, res, next) {
-    var sql = 'SELECT * FROM applications';
+    var sql = 'SELECT applications.*, employee.name AS employee_name FROM applications JOIN employee ON applications.EMPLOYEEID = employee.id';
     database.query(sql, (err, result) => {
         if (err) {
             console.error('Error executing query:', err);

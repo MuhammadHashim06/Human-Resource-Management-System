@@ -77,7 +77,7 @@ const Requests = () => {
                 className="app-info"
                 onClick={() => handleSelectApp(application.ID)}
               >
-                {/* <strong>{application.applicant}</strong> */}
+                <strong>{application.employee_name}</strong>
                 <span>{application.SUBJECT}</span>
                 <span>Status: {application.STATUS}</span>
               </div>
