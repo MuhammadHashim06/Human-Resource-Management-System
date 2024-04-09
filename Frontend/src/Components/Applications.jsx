@@ -16,7 +16,7 @@ const Applications = () => {
 
     const fetchApplications = async () => {
         try {
-            const response = await fetch('your_api_endpoint_here');
+            const response = await fetch('http://localhost:4000/getapplications');
             const data = await response.json();
             setApplications(data.applications);
         } catch (error) {

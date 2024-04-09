@@ -1,50 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Requests.css";
 
 const Requests = () => {
-  const [applications, setApplications] = useState([
-    {
-      id: 1,
-      applicant: "John Doe",
-      subject: "Vacation Request",
-      status: "pending",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce commodo odio quis tellus tincidunt, vel congue elit blandit.",
-    },
-    {
-      id: 2,
-      applicant: "Jane Smith",
-      subject: "Sick Leave Request",
-      status: "approved",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce commodo odio quis tellus tincidunt, vel congue elit blandit.",
-    },
-    {
-      id: 3,
-      applicant: "Alice Johnson",
-      subject: "Work from Home Request",
-      status: "rejected",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce commodo odio quis tellus tincidunt, vel congue elit blandit.",
-    },
-  ]);
-
+  const [applications, setApplications] = useState([]);
   const [selectedApp, setSelectedApp] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    fetchApplications();
+  }, []);
+
+  const fetchApplications = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/getapplications");
+      const data = await response.json();
+
+      setApplications(data);
+    } catch (error) {
+      console.error("Error fetching applications:", error);
+    }
+  };
 
   const handleSelectApp = (appId) => {
     setSelectedApp(appId);
     setShowModal(true);
   };
 
-  const handleStatusChange = (newStatus) => {
-    setApplications(
-      applications.map((app) =>
-        app.id === selectedApp ? { ...app, status: newStatus } : app
-      )
-    );
-    setSelectedApp(null);
-    setShowModal(false);
+  const handleStatusChange = async (newStatus) => {
+    try {
+      await fetch(`http://localhost:4000/updatestatus/${selectedApp}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      setApplications(
+        applications.map((app) =>
+          app.ID === selectedApp ? { ...app, status: newStatus } : app
+        )
+      );
+      setSelectedApp(null);
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
   };
 
   return (
@@ -55,8 +55,8 @@ const Requests = () => {
             <span className="close" onClick={() => setShowModal(false)}>
               X
             </span>
-            <h3>{applications[selectedApp - 1].subject}</h3>
-            <p>{applications[selectedApp - 1].details}</p>
+            <h3>{applications.find((app) => app.ID === selectedApp).SUBJECT}</h3>
+            <p>{applications.find((app) => app.ID === selectedApp).DESCRIPTION}</p>
             <div className="actions">
               <button onClick={() => handleStatusChange("approved")}>
                 Approve
@@ -72,13 +72,14 @@ const Requests = () => {
         <h2>Application List</h2>
         <ul>
           {applications.map((application) => (
-            <li key={application.id}>
+            <li key={application.ID}>
               <div
                 className="app-info"
-                onClick={() => handleSelectApp(application.id)}>
-                <strong>{application.applicant}</strong>
-                <span>{application.subject}</span>
-                <span>Status: {application.status}</span>
+                onClick={() => handleSelectApp(application.ID)}
+              >
+                {/* <strong>{application.applicant}</strong> */}
+                <span>{application.SUBJECT}</span>
+                <span>Status: {application.STATUS}</span>
               </div>
             </li>
           ))}
