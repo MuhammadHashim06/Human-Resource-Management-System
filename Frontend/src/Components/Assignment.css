@@ -43,3 +43,61 @@
     transform: scale(1.1);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+  }
+  
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    background-color: #007bff;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .progress-text {
+    margin-top: 5px;
+    text-align: center;
+  }
+  
+  @keyframes fillAnimation {
+    from {
+      width: 0;
+    }
+  }
+  
+  .assignments-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .assignment-column {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 0 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .assignment {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px 0;
+    cursor: pointer;
+  }
+  
+  .assignment-column h2 {
+    text-align: center;
+  }
+  
+  .assignment-column:hover {
+    background-color: #f0f0f0;
+  }
+  
