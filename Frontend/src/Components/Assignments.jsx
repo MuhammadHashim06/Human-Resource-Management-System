@@ -183,22 +183,24 @@
 
 // export default Assignments;
 
+
 import { useState, useEffect } from 'react';
 import './Assignment.css';
 
 const Assignments = (props) => {
   const [assignments, setAssignments] = useState([]);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
+
   useEffect(() => {
     fetchAssignments();
   }, []);
 
   const fetchAssignments = async () => {
     try {
-      const response = await fetch('http://localhost:4000/getassignments');
+      const response = await fetch(`http://localhost:4000/getassignments/${props.id}`);
       const data = await response.json();
       setAssignments(data);
-      console.log(assignments);
+      console.log(data);
     } catch (error) {
       console.error('Error fetching assignments:', error);
     }
@@ -212,7 +214,7 @@ const Assignments = (props) => {
     e.preventDefault();
     const id = parseInt(e.dataTransfer.getData('text/plain'));
     const updatedAssignments = assignments.map((assignment) =>
-      assignment.id === id ? { ...assignment, status } : assignment
+      assignment.ID === id ? { ...assignment, status } : assignment
     );
     setAssignments(updatedAssignments);
   };
@@ -290,7 +292,7 @@ const Assignments = (props) => {
             .filter((assignment) => assignment.STATUS === 'InProgress')
             .map((assignment) => (
               <div
-                key={assignment.id}
+                key={assignment.ID}
                 className="assignment"
                 draggable
                 onDragStart={(e) => handleDragStart(e, assignment.ID)}
@@ -307,13 +309,13 @@ const Assignments = (props) => {
         >
           <h2>Completed</h2>
           {assignments
-            .filter((assignment) => assignment.STATUS === 'Completed')
+            .filter((assignment) => assignment.status === 'Completed')
             .map((assignment) => (
               <div
-                key={assignment.id}
+                key={assignment.ID}
                 className="assignment"
                 draggable
-                onDragStart={(e) => handleDragStart(e, assignment.ID)}
+                onDragStart={(e) => handleDragStart(e, assignment.id)}
                 onClick={() => openAssignmentDetails(assignment)}
               >
                 {assignment.TITLE}
@@ -324,7 +326,7 @@ const Assignments = (props) => {
       {selectedAssignment && (
         <div className="assignment-details">
           <div className="assignment-details-content">
-            <h2>{selectedAssignment.TITLE}</h2>
+            <h2>{selectedAssignment.title}</h2>
             <p><strong>Status:</strong> {selectedAssignment.STATUS}</p>
             <p><strong>Date of Assigning:</strong> {selectedAssignment.DATEOFASSIGNING}</p>
             <p><strong>Due Date:</strong> {selectedAssignment.DUEDATE}</p>
