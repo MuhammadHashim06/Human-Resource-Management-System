@@ -26,7 +26,7 @@ const Applications = (props) => {
     };
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        event.preventDefault(); // Prevent default form submission
         try {
             const response = await fetch('http://localhost:4000/addapplications/', {
                 method: 'POST',
@@ -46,6 +46,7 @@ const Applications = (props) => {
                 setApplications([...applications, data.application]);
                 setSubject('');
                 setBody('');
+                console.log(applications);
                 setShowForm(false);
             } else {
                 console.error('Failed to submit application');
@@ -87,6 +88,7 @@ const Applications = (props) => {
                         </thead>
                         <tbody>
                             {applications.map((application, index) => (
+                                application.EMPLOYEEID==props.id &&
                                 <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{application.SUBJECT}</td>

@@ -19,7 +19,7 @@ export default function Admin(props) {
     <div>
       <div className="Dashboard">
         <Sidebar prop={onClick} Cuser={props.data} />
-        {component === "Home" && <Home name={props.data.NAME} ID= {props.data.ID}/>}
+        {component === "Home" && <Home />}
         {component === "Employee" && <EmployeeList />}
         {component === "Requests" && <Requests />}
         {component === "Reports" && <Reports />}
