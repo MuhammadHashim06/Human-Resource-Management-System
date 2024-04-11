@@ -17,7 +17,7 @@ export default function User(props) {
     <Sidebar prop={onClick} />
     {component === 'Home' && <Home />}
     {component === 'Applications' && <Applications name={props.data.NAME} id= {props.data.ID} />}
-    {component === 'Assignments' && <Assignments />}
+    {component === 'Assignments' && <Assignments name={props.data.NAME} id= {props.data.ID} />}
     {component === 'Attendance' && <Attendance />}
   </div></div>
   )

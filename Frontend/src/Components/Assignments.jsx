@@ -183,40 +183,26 @@
 
 // export default Assignments;
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Assignment.css';
 
-const Assignments = () => {
-  const [assignments, setAssignments] = useState([
-    {
-      id: 1,
-      title: 'Assignment 1',
-      status: 'Pending',
-      dateAssigning: '2024-04-15',
-      dueDate: '2024-04-30',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      progress: 0,
-    },
-    {
-      id: 2,
-      title: 'Assignment 2',
-      status: 'InProgress',
-      dateAssigning: '2024-04-10',
-      dueDate: '2024-04-25',
-      description: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      progress: 50,
-    },
-    {
-      id: 3,
-      title: 'Assignment 3',
-      status: 'Completed',
-      dateAssigning: '2024-04-05',
-      dueDate: '2024-04-20',
-      description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      progress: 100,
-    },
-  ]);
+const Assignments = (props) => {
+  const [assignments, setAssignments] = useState([]);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+
+  const fetchAssignments = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/getassignments');
+      const data = await response.json();
+      setAssignments(data);
+      console.log(assignments);
+    } catch (error) {
+      console.error('Error fetching assignments:', error);
+    }
+  };
 
   const handleDragStart = (e, id) => {
     e.dataTransfer.setData('text/plain', id.toString());
@@ -251,24 +237,98 @@ const Assignments = () => {
     });
   };
 
-  const saveProgress = () => {
-    const updatedAssignments = assignments.map((assignment) =>
-      assignment.id === selectedAssignment.id ? selectedAssignment : assignment
-    );
-    setAssignments(updatedAssignments);
-    setSelectedAssignment(null);
+  const saveProgress = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/getassignments/${selectedAssignment.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(selectedAssignment),
+      });
+      if (response.ok) {
+        fetchAssignments(); // Refresh assignments after updating progress
+        setSelectedAssignment(null);
+      } else {
+        console.error('Failed to update progress');
+      }
+    } catch (error) {
+      console.error('Error updating progress:', error);
+    }
   };
 
   return (
     <>
-    {selectedAssignment && (
-        <div className="assignment-modal">
-          <div className="assignment-modal-content">
-            <h2>{selectedAssignment.title}</h2>
-            <p><strong>Status:</strong> {selectedAssignment.status}</p>
-            <p><strong>Date of Assigning:</strong> {selectedAssignment.dateAssigning}</p>
-            <p><strong>Due Date:</strong> {selectedAssignment.dueDate}</p>
-            <p><strong>Description:</strong><br />{selectedAssignment.description}</p>
+      <div className="menu assignments-container">
+        <div
+          className="assignment-column"
+          onDrop={(e) => handleDrop(e, 'Pending')}
+          onDragOver={handleDragOver}
+        >
+          <h2>Pending</h2>
+          {assignments
+            .filter((assignment) => assignment.STATUS === 'Pending')
+            .map((assignment) => (
+              <div
+                key={assignment.ID}
+                className="assignment"
+                draggable
+                onDragStart={(e) => handleDragStart(e, assignment.ID)}
+                onClick={() => openAssignmentDetails(assignment)}
+              >
+                {assignment.TITLE}
+              </div>
+            ))}
+        </div>
+        <div
+          className="assignment-column"
+          onDrop={(e) => handleDrop(e, 'InProgress')}
+          onDragOver={handleDragOver}
+        >
+          <h2>In Progress</h2>
+          {assignments
+            .filter((assignment) => assignment.STATUS === 'InProgress')
+            .map((assignment) => (
+              <div
+                key={assignment.id}
+                className="assignment"
+                draggable
+                onDragStart={(e) => handleDragStart(e, assignment.ID)}
+                onClick={() => openAssignmentDetails(assignment)}
+              >
+                {assignment.TITLE}
+              </div>
+            ))}
+        </div>
+        <div
+          className="assignment-column"
+          onDrop={(e) => handleDrop(e, 'Completed')}
+          onDragOver={handleDragOver}
+        >
+          <h2>Completed</h2>
+          {assignments
+            .filter((assignment) => assignment.STATUS === 'Completed')
+            .map((assignment) => (
+              <div
+                key={assignment.id}
+                className="assignment"
+                draggable
+                onDragStart={(e) => handleDragStart(e, assignment.ID)}
+                onClick={() => openAssignmentDetails(assignment)}
+              >
+                {assignment.TITLE}
+              </div>
+            ))}
+        </div>
+      </div>
+      {selectedAssignment && (
+        <div className="assignment-details">
+          <div className="assignment-details-content">
+            <h2>{selectedAssignment.TITLE}</h2>
+            <p><strong>Status:</strong> {selectedAssignment.STATUS}</p>
+            <p><strong>Date of Assigning:</strong> {selectedAssignment.DATEOFASSIGNING}</p>
+            <p><strong>Due Date:</strong> {selectedAssignment.DUEDATE}</p>
+            <p><strong>Description:</strong><br />{selectedAssignment.DESCRIPTION}</p>
             {selectedAssignment.status === 'InProgress' && (
               <>
                 <div className="progress-bar">
@@ -284,7 +344,7 @@ const Assignments = () => {
                   name="progress"
                   min="0"
                   max="100"
-                  value={selectedAssignment.progress}
+                  value={selectedAssignment.PROGRESS}
                   onChange={handleProgressChange}
                 />
                 <button onClick={saveProgress}>Save Progress</button>
@@ -294,75 +354,6 @@ const Assignments = () => {
           </div>
         </div>
       )}
-      <div className="menu assignments-container">
-        <div
-          className="assignment-column"
-          onDrop={(e) => handleDrop(e, 'Pending')}
-          onDragOver={handleDragOver}
-        >
-          <h2>Pending</h2>
-          {assignments
-            .filter((assignment) => assignment.status === 'Pending')
-            .map((assignment) => (
-              <div
-                key={assignment.id}
-                className="assignment"
-                draggable
-                onDragStart={(e) => handleDragStart(e, assignment.id)}
-                onClick={() => openAssignmentDetails(assignment)}
-              >
-                {assignment.title}
-              </div>
-            ))}
-        </div>
-        <div
-          className="assignment-column"
-          onDrop={(e) => handleDrop(e, 'InProgress')}
-          onDragOver={handleDragOver}
-        >
-          <h2>In Progress</h2>
-          {assignments
-            .filter((assignment) => assignment.status === 'InProgress')
-            .map((assignment) => (
-              <div
-                key={assignment.id}
-                className="assignment"
-                draggable
-                onDragStart={(e) => handleDragStart(e, assignment.id)}
-                onClick={() => openAssignmentDetails(assignment)}
-              >
-                {assignment.title}
-                <div className="progress-bar">
-                  <div
-                    className="progress-bar-fill"
-                    style={{ width: `${selectedAssignment.progress}%` }}
-                  ></div>
-                </div>
-              </div>
-            ))}
-        </div>
-        <div
-          className="assignment-column"
-          onDrop={(e) => handleDrop(e, 'Completed')}
-          onDragOver={handleDragOver}
-        >
-          <h2>Completed</h2>
-          {assignments
-            .filter((assignment) => assignment.status === 'Completed')
-            .map((assignment) => (
-              <div
-                key={assignment.id}
-                className="assignment"
-                draggable
-                onDragStart={(e) => handleDragStart(e, assignment.id)}
-                onClick={() => openAssignmentDetails(assignment)}
-              >
-                {assignment.title}
-              </div>
-            ))}
-        </div>
-      </div>
-      
     </>
   );
 };
