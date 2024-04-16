@@ -14,6 +14,10 @@ var getapplications=require('./routes/getapplications');
 var updatestatus=require('./routes/updatestatus');
 var addapplications=require('./routes/addapplications');
 var getassignments=require('./routes/getassignments');
+var attendance=require('./routes/attendance');
+var updateassigment=require('./routes/updateassigment');
+var getattendence=require('./routes/getattendence');
+
 var app = express();
 const cors = require('cors');
 
@@ -38,6 +42,9 @@ app.use('/getapplications',getapplications);
 app.use('/updatestatus',updatestatus);
 app.use('/addapplications',addapplications);
 app.use('/getassignments',getassignments);
+app.use('/attendance',attendance);
+app.use('/updateassigment',updateassigment);
+app.use('/getattendence',getattendence);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

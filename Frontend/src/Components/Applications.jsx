@@ -26,7 +26,7 @@ const Applications = (props) => {
     };
 
     const handleSubmit = async (event) => {
-        event.preventDefault(); // Prevent default form submission
+        
         try {
             const response = await fetch('http://localhost:4000/addapplications/', {
                 method: 'POST',

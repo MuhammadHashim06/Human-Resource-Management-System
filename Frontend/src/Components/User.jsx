@@ -18,7 +18,7 @@ export default function User(props) {
     {component === 'Home' && <Home />}
     {component === 'Applications' && <Applications name={props.data.NAME} id= {props.data.ID} />}
     {component === 'Assignments' && <Assignments name={props.data.NAME} id= {props.data.ID} />}
-    {component === 'Attendance' && <Attendance />}
+    {component === 'Attendance' && <Attendance name={props.data.NAME} id= {props.data.ID}/>}
   </div></div>
   )
 }

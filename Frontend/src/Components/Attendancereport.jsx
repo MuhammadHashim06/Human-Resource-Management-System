@@ -1,9 +1,27 @@
-import React, { useState } from 'react';
-import './Attendancereport.css'
+import  { useState, useEffect } from 'react';
+import './Attendancereport.css';
+
 const AttendanceReport = () => {
   const [searchType, setSearchType] = useState('name');
   const [searchInput, setSearchInput] = useState('');
-  const [attendanceData, setAttendanceData] = useState(null);
+  const [attendanceData, setAttendanceData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+
+  useEffect(() => {
+    fetchAttendanceData();
+  }, []);
+
+  const fetchAttendanceData = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/getattendence');
+      const data = await response.json();
+      console.log(data);
+      setAttendanceData(data);
+      setFilteredData(data);
+    } catch (error) {
+      console.error('Error fetching attendance data:', error);
+    }
+  };
 
   const handleSearchTypeChange = (e) => {
     setSearchType(e.target.value);
@@ -14,9 +32,23 @@ const AttendanceReport = () => {
   };
 
   const handleSearch = () => {
-    // Implement search logic based on searchType and searchInput
-    // Update attendanceData with the result
+    if (searchInput.trim() === '') {
+      setFilteredData(attendanceData);
+      return;
+    }
+  
+    const filtered = attendanceData.filter((attendance) => {
+      if (searchType === 'name') {
+        return attendance.employee_name.toLowerCase().includes(searchInput.toLowerCase());
+      } else if (searchType === 'date') {
+        return attendance.DATE.includes(searchInput);
+      }
+      return true;
+    });
+  
+    setFilteredData(filtered);
   };
+  
 
   return (
     <div className='menu'>
@@ -50,30 +82,26 @@ const AttendanceReport = () => {
         />
         <button onClick={handleSearch}>Search</button>
       </div>
-      {attendanceData && (
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Name</th>
-                <th>Attendance Status</th>
-                <th>Worked Hours</th>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Name</th>
+              <th>Attendance Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredData.map((attendance, index) => (
+              <tr key={index}>
+                <td>{attendance.DATE}</td>
+                <td>{attendance.employee_name}</td>
+                <td>{attendance.STATUS}</td>
               </tr>
-            </thead>
-            <tbody>
-              {attendanceData.map((attendance) => (
-                <tr key={attendance.date}>
-                  <td>{attendance.date}</td>
-                  <td>{attendance.name}</td>
-                  <td>{attendance.status}</td>
-                  <td>{attendance.workedHours}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
