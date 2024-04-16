@@ -17,6 +17,7 @@ var getassignments=require('./routes/getassignments');
 var attendance=require('./routes/attendance');
 var updateassigment=require('./routes/updateassigment');
 var getattendence=require('./routes/getattendence');
+var assignments=require('./routes/assignments');
 
 var app = express();
 const cors = require('cors');
@@ -45,6 +46,7 @@ app.use('/getassignments',getassignments);
 app.use('/attendance',attendance);
 app.use('/updateassigment',updateassigment);
 app.use('/getattendence',getattendence);
+app.use('/assignments',assignments);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

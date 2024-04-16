@@ -62,9 +62,10 @@ const Reports = () => {
       alert("Please select a due date for the task");
       return;
     }
+    const datenow = new Date().toISOString().split('T')[0];
 
     try {
-      const response = await fetch("http://localhost:4000/assignTask", {
+      const response = await fetch("http://localhost:4000/assignments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,6 +75,7 @@ const Reports = () => {
           title,
           description,
           dueDate,
+          datenow,
         }),
       });
       if (response.ok) {

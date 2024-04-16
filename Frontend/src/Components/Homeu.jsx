@@ -1,42 +1,8 @@
-// import { useEffect } from 'react';
-// import './Home.css'
-// function Home() {
-//     useEffect()=>{
-// fetchtask();
-//     }
-//     const fetchtask()=>{
-
-//     } 
-//     return (
-//         <div className="menu">
-//             <h1>Home</h1>
-//             <div className="content">
-//                 <div className="announcement">
-//                     <h2>Announcement</h2>
-//                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et mauris vel tortor convallis
-//                         tincidunt. Aliquam nec congue enim. Donec rutrum tellus eget diam consequat, sit amet
-//                         scelerisque justo cursus.</p>
-//                 </div>
-//                 <div className="chart-container">
-//                     <canvas id="attendanceChart"></canvas>
-//                 </div>
-//                 <div className="chart-container">
-//                     <canvas id="assignmentChart">
-                        
-//                     </canvas>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default Home;
-
 import { useState, useEffect } from 'react';
 import Chart from 'chart.js/auto';
 import './Home.css';
 
-function Home() {
+function Home(props) {
     const [attendanceData, setAttendanceData] = useState([]);
     const [assignmentData, setAssignmentData] = useState([]);
 
@@ -47,7 +13,7 @@ function Home() {
 
     const fetchAttendanceData = async () => {
         try {
-            const response = await fetch('http://localhost:4000/getattendence');
+            const response = await fetch('http://localhost:4000/getattendence{props.id}');
             const data = await response.json();
             setAttendanceData(data);
         } catch (error) {
@@ -57,7 +23,7 @@ function Home() {
 
     const fetchAssignmentData = async () => {
         try {
-            const response = await fetch('http://localhost:4000/getassignments');
+            const response = await fetch('http://localhost:4000/getassignments{props.id}');
             const data = await response.json();
             setAssignmentData(data);
         } catch (error) {
@@ -66,6 +32,7 @@ function Home() {
     };
 
     useEffect(() => {
+        let attendanceChart = null;
         if (attendanceData.length > 0) {
             const employeeAttendance = {};
             attendanceData.forEach((attendance) => {
@@ -87,7 +54,10 @@ function Home() {
             });
     
             const ctx = document.getElementById('attendanceChart');
-            new Chart(ctx, {
+            if (attendanceChart) {
+                attendanceChart.destroy();
+            }
+            attendanceChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
@@ -135,6 +105,8 @@ function Home() {
             });
         }
     }, [attendanceData]);
+    
+    
     
 
     useEffect(() => {

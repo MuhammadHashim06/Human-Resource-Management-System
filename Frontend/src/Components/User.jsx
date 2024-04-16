@@ -6,7 +6,7 @@ import Assignments from './Assignments';
 import Attendance from './Attendance';
 
 export default function User(props) {
-    const [component, setComponent] = useState('Home');
+    const [component, setComponent] = useState('Applications');
 
   function onClick(name) {
     console.log("Button clicked: ", name);
@@ -15,7 +15,7 @@ export default function User(props) {
   return (
     <div><div className="Dashboard">
     <Sidebar prop={onClick} />
-    {component === 'Home' && <Home />}
+    {component === 'Home' && <Home name={props.data.NAME} id= {props.data.ID} />}
     {component === 'Applications' && <Applications name={props.data.NAME} id= {props.data.ID} />}
     {component === 'Assignments' && <Assignments name={props.data.NAME} id= {props.data.ID} />}
     {component === 'Attendance' && <Attendance name={props.data.NAME} id= {props.data.ID}/>}

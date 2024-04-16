@@ -26,7 +26,8 @@ const Applications = (props) => {
     };
 
     const handleSubmit = async (event) => {
-        
+        event.preventDefault();
+        const date= new Date().toISOString().split('T')[0];
         try {
             const response = await fetch('http://localhost:4000/addapplications/', {
                 method: 'POST',
@@ -37,7 +38,7 @@ const Applications = (props) => {
                     employee_id: props.id,
                     subject: subject,
                     description: body,
-                    date: new Date().toISOString().slice(0, 10), // yyyy-mm-dd format
+                    date: date, // yyyy-mm-dd format
                     status: 'Pending',
                 }),
             });

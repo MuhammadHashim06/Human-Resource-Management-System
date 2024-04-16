@@ -3,7 +3,7 @@ import './Sidebar.css';
 import { Link } from 'react-router-dom';
 
 function Sidebar(props) {
-  const [activeItem, setActiveItem] = useState(null);
+  const [activeItem, setActiveItem] = useState('Attendance');
 
   const handleClick = (e) => {
     const componentName = e.target.id;
@@ -22,7 +22,7 @@ function Sidebar(props) {
       </div>
       <div className="menubar">
         <ul>
-          <li id="Home" className={`menu-link ${activeItem === 'Home' ? 'active' : ''}`} onClick={handleClick}>Home</li>
+          {/* <li id="Home" className={`menu-link ${activeItem === 'Home' ? 'active' : ''}`} onClick={handleClick}>Home</li> */}
           <li id="Attendance" className={`menu-link ${activeItem === 'Attendance' ? 'active' : ''}`} onClick={handleClick}>Attendance</li>
           <li id="Assignments" className={`menu-link ${activeItem === 'Assignments' ? 'active' : ''}`} onClick={handleClick}>Assignments</li>
           <li id="Applications" className={`menu-link ${activeItem === 'Applications' ? 'active' : ''}`} onClick={handleClick}>Applications</li>

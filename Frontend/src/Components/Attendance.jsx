@@ -29,7 +29,7 @@ const Attendance = (props) => {
             status = 'Late';
         }
 
-        const date = now.toDateString();
+        const date = new Date().toISOString().split('T')[0];
         const time = now.toLocaleTimeString();
         // const newAttendanceItem = { date, time, status };
         // setAttendanceItems([...attendanceItems, newAttendanceItem]);

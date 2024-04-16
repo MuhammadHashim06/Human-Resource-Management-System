@@ -1,13 +1,13 @@
 import { useState } from "react";
 import Sidebar from "./Admin";
-import Home from "./Home";
+import Home from "./Homeu";
 import Requests from "./Requests";
 import Reports from "./Reports";
 import EmployeeList from "./Employee";
 import AttendanceReport from "./Attendancereport";
 
 export default function Admin(props) {
-  const [component, setComponent] = useState("Home");
+  const [component, setComponent] = useState("Employee");
 
   function onClick(name) {
     console.log("Button clicked: ", name);
