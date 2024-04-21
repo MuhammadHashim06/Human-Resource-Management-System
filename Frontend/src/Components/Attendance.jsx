@@ -3,7 +3,6 @@ import './Attendance.css';
 
 const Attendance = (props) => {
     const [attendanceItems, setAttendanceItems] = useState([]);
-    const [markedToday, setMarkedToday] = useState(false);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -11,12 +10,7 @@ const Attendance = (props) => {
     }, []);
 
     const markAttendance = async (event) => {
-        event.preventDefault(); // Prevent default form submission
-
-        if (markedToday) {
-            alert("Attendance already marked for today!");
-            return;
-        }
+        event.preventDefault(); 
 
         const now = new Date();
         const hours = now.getHours();
@@ -31,8 +25,14 @@ const Attendance = (props) => {
 
         const date = new Date().toISOString().split('T')[0];
         const time = now.toLocaleTimeString();
-        // const newAttendanceItem = { date, time, status };
-        // setAttendanceItems([...attendanceItems, newAttendanceItem]);
+
+        // Check if attendance for today already exists
+        const attendanceExists = attendanceItems.some(item => item.DATE === date);
+        if (attendanceExists) {
+            console.log('Attendance for today has already been marked.');
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:4000/attendance/', {
                 method: 'POST',
@@ -47,7 +47,6 @@ const Attendance = (props) => {
                 }),
             });
             if (response.ok) {
-                setMarkedToday(true);
                 fetchAttendance();
             } else {
                 console.error('Failed to mark attendance');
@@ -66,6 +65,7 @@ const Attendance = (props) => {
             console.log(data);
         } catch (error) {
             console.error('Error fetching attendance:', error);
+            setLoading(false);
         }
     };
 

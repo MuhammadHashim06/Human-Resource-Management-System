@@ -6,7 +6,7 @@ import Assignments from './Assignments';
 import Attendance from './Attendance';
 
 export default function User(props) {
-    const [component, setComponent] = useState('Applications');
+    const [component, setComponent] = useState('Attendance');
 
   function onClick(name) {
     console.log("Button clicked: ", name);

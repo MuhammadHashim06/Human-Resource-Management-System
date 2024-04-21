@@ -13,7 +13,7 @@ function Home(props) {
 
     const fetchAttendanceData = async () => {
         try {
-            const response = await fetch('http://localhost:4000/getattendence{props.id}');
+            const response = await fetch(`http://localhost:4000/getattendance/${props.id}`);
             const data = await response.json();
             setAttendanceData(data);
         } catch (error) {
@@ -23,7 +23,7 @@ function Home(props) {
 
     const fetchAssignmentData = async () => {
         try {
-            const response = await fetch('http://localhost:4000/getassignments{props.id}');
+            const response = await fetch(`http://localhost:4000/getassignments/${props.id}`);
             const data = await response.json();
             setAssignmentData(data);
         } catch (error) {
@@ -32,32 +32,24 @@ function Home(props) {
     };
 
     useEffect(() => {
-        let attendanceChart = null;
         if (attendanceData.length > 0) {
             const employeeAttendance = {};
             attendanceData.forEach((attendance) => {
                 const { employee_name, STATUS } = attendance;
                 if (!employeeAttendance[employee_name]) {
-                    employeeAttendance[employee_name] = {
-                        late: 0,
-                        present: 0,
-                        absent: 0,
-                    };
+                    employeeAttendance[employee_name] = { late: 0, present: 0, absent: 0 };
                 }
                 employeeAttendance[employee_name][STATUS.toLowerCase()]++;
             });
-    
+
             const labels = Object.keys(employeeAttendance);
             const data = labels.map((employee_name) => {
                 const { late, present, absent } = employeeAttendance[employee_name];
                 return { late, present, absent };
             });
-    
+
             const ctx = document.getElementById('attendanceChart');
-            if (attendanceChart) {
-                attendanceChart.destroy();
-            }
-            attendanceChart = new Chart(ctx, {
+            new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
@@ -105,9 +97,6 @@ function Home(props) {
             });
         }
     }, [attendanceData]);
-    
-    
-    
 
     useEffect(() => {
         if (assignmentData.length > 0) {

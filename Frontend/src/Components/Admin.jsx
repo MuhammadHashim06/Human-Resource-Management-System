@@ -1,6 +1,8 @@
 import  { useState } from 'react';
 import './Sidebar.css';
 import { Link } from 'react-router-dom';
+import logo from '../HRMS_LOGO.png'
+
 
 function Sidebar(props) {
   const [activeItem, setActiveItem] = useState('Employee');
@@ -14,7 +16,7 @@ console.log(props);
   return (
     <div className="sidebar">
       <div className="user">
-        <img src="../Images/Log-in_vector.png" alt="" />
+        <img src={logo} alt="Company Logo" />
         <p>
           {props.Cuser.NAME} <br />
           <span>Web developer</span>
@@ -22,7 +24,7 @@ console.log(props);
       </div>
       <div className="menubar">
         <ul>
-          {/* <li id="Home" className={`menu-link ${activeItem === 'Home' ? 'active' : ''}`} onClick={handleClick}>Home</li> */}
+          <li id="Home" className={`menu-link ${activeItem === 'Home' ? 'active' : ''}`} onClick={handleClick}>Home</li>
           <li id="Employee" className={`menu-link ${activeItem === 'Employee' ? 'active' : ''}`} onClick={handleClick}>Employee</li>
           <li id="Attendance" className={`menu-link ${activeItem === 'Attendance' ? 'active' : ''}`} onClick={handleClick}>Attendance</li>
           <li id="Reports" className={`menu-link ${activeItem === 'Reports' ? 'active' : ''}`} onClick={handleClick}>Reports</li>

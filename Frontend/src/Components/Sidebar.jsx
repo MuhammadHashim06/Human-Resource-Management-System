@@ -1,6 +1,7 @@
 import  { useState } from 'react';
 import './Sidebar.css';
 import { Link } from 'react-router-dom';
+import logo from '../HRMS_LOGO.png'
 
 function Sidebar(props) {
   const [activeItem, setActiveItem] = useState('Attendance');
@@ -14,7 +15,7 @@ function Sidebar(props) {
   return (
     <div className="sidebar">
       <div className="user">
-        <img src="../Images/Log-in_vector.png" alt="" />
+        <img src={logo} alt="Company Logo" />
         <p>
           Muhammad Hashim <br />
           <span>Web developer</span>

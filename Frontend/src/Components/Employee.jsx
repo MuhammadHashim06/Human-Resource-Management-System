@@ -159,9 +159,16 @@ const EmployeeList = () => {
       alert("Please enter a valid email address");
       return false;
     }
+    if (!validateName(newName)) {
+      alert("Please enter a valid name (alphabets only)");
+      return false;
+    }
     return true;
   };
-
+  const validateName = (name) => {
+    const re = /^[a-zA-Z ]+$/;
+    return re.test(name);
+  };
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
